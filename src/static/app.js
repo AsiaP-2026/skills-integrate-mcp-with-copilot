@@ -37,13 +37,31 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>`
             : `<p><em>No participants yet</em></p>`;
 
+        const waitlistHTML =
+          details.waitlist && details.waitlist.length > 0
+            ? `<div class="waitlist-section">
+              <h5>Waitlist (${details.waitlist.length}):</h5>
+              <ul class="waitlist-list">
+                ${details.waitlist
+                  .map((email) => `<li>${email}</li>`)
+                  .join("")}
+              </ul>
+            </div>`
+            : "";
+
+        const availabilityText =
+          spotsLeft > 0
+            ? `${spotsLeft} spots left`
+            : "Full — new signups will join the waitlist";
+
         activityCard.innerHTML = `
           <h4>${name}</h4>
           <p>${details.description}</p>
           <p><strong>Schedule:</strong> ${details.schedule}</p>
-          <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
+          <p><strong>Availability:</strong> ${availabilityText}</p>
           <div class="participants-container">
             ${participantsHTML}
+            ${waitlistHTML}
           </div>
         `;
 
